@@ -10,6 +10,7 @@ use Qubrics\Management\ClientFactory as ManagementFactory;
 use Qubrics\Sdk\Sdk;
 use Qubrics\Sending\ClientFactory as SendingFactory;
 
+/** Fails the public contract when an observable SDK guarantee breaks. */
 function expect(bool $condition, string $message): void
 {
     if (!$condition) {

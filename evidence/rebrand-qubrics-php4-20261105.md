@@ -27,6 +27,8 @@ Logs under MAIN `.claude/artifacts/rebrand-qubrics-php4/`: `sdk-baseline-install
 
 ## Review and publication
 
+Automated review's docstring warning concerned the new assertion helper. Its contract is documented without changing behaviour. The A11 specification link was verified through authenticated GitHub API; unauthenticated HTTP 404 does not show that this private repository's canonical file is absent.
+
 Independent copy critique corrected the registry guard, dependency wording and explicit old/new exception migration. One humanize pass on changed prose and a protected-set check completed; technical identifiers, figures and URLs preserved.
 
 Canonical publisher blocker: SDK monorepo main `2498ae8e90932fa98b54926653a4a6185bb2a4c3`, `scripts/publish-php-split.mjs:40-60`, enforces exact source/split parity and still requires `sendmux/sdk`. Source/generator/publisher alignment requires its own owner; the publication guard is not bypassed.
