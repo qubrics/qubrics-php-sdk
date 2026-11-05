@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sendmux\Sdk;
+namespace Qubrics\Sdk;
 
 final class Sdk
 {
-    public const VERSION = '2.1.0';
+    public const VERSION = '3.0.0';
 }
