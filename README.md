@@ -24,15 +24,9 @@ Until then, retain your existing Composer constraint.
 composer require qubrics/sdk:^3.0
 ```
 
-## Upgrade from 2.x
+Before upgrading from 2.x, read the [PHP 3.0 migration guide](https://github.com/qubrics/qubrics-sdk/blob/main/packages/php/UPGRADING-3.0.md). SDK 3.0 requires all four Qubrics packages on 3.x. If you use 1.x, apply the [PHP 2.0 migration guide](https://github.com/qubrics/qubrics-sdk/blob/main/packages/php/UPGRADING.md) first.
 
-Replace `sendmux/sdk` with `qubrics/sdk:^3.0` in `composer.json`, then run `composer update`.
-Change PHP imports from `Sendmux\` to `Qubrics\`.
-Replace `Sendmux\Core\SendmuxApiError` with `Qubrics\Core\QubricsApiError`.
-The umbrella package installs core, Sending, Mailbox and Management together. Existing `smx_*` API keys keep working.
-Defaults use `smtp.qubrics.com` and `app.qubrics.com`; explicit base URLs remain supported.
-
-Upgrading from 1.x? Read the [PHP 2.0 migration guide](https://github.com/qubrics/qubrics-sdk/blob/main/packages/php/UPGRADING.md) before changing your Composer constraint.
+If your custom Guzzle client uses `FileCookieJar` or `SessionCookieJar`, back up its state and re-authenticate into a fresh jar when upgrading. Guzzle rejects old records without a boolean `HostOnly`; do not guess that value. Default Qubrics API clients do not enable cookies. See the [upstream migration warning](https://github.com/guzzle/guzzle/security/advisories/GHSA-wm3w-8rrp-j577).
 
 ## Usage
 
@@ -48,22 +42,22 @@ use Qubrics\Management\ClientFactory as ManagementFactory;
 use Qubrics\Sending\ClientFactory as SendingFactory;
 
 $sending = SendingFactory::createEmailsApi(
-    getenv('QUBRICS_MAILBOX_API_KEY') ?: getenv('SENDMUX_MAILBOX_API_KEY') ?: ''
+    getenv('QUBRICS_MAILBOX_API_KEY') ?: getenv('SENDMUX_MAILBOX_API_KEY') ?: null
 );
 
 $mailbox = MailboxFactory::createMailboxAPIApi(
-    getenv('QUBRICS_MAILBOX_API_KEY') ?: getenv('SENDMUX_MAILBOX_API_KEY') ?: ''
+    getenv('QUBRICS_MAILBOX_API_KEY') ?: getenv('SENDMUX_MAILBOX_API_KEY') ?: null
 );
 
 $management = ManagementFactory::createMailboxesApi(
-    getenv('QUBRICS_ROOT_API_KEY') ?: getenv('SENDMUX_ROOT_API_KEY') ?: ''
+    getenv('QUBRICS_ROOT_API_KEY') ?: getenv('SENDMUX_ROOT_API_KEY') ?: null
 );
 ```
 
 > [!NOTE]
 > `qubrics/sdk` installs all PHP SDK surfaces. It does not replace the surface factories.
 
-For OAuth, use each factory’s `WithAccessToken` variant, such as `SendingFactory::createMetaApiWithAccessToken($accessToken)`. It accepts a bare token or a callable returning one; see [OAuth setup and lifecycle](https://qubrics.com/docs/developer-tools/oauth).
+For OAuth, use each factory's `WithAccessToken` variant, such as `SendingFactory::createMetaApiWithAccessToken($accessToken)`. It accepts a bare token or a callable returning one. See [OAuth setup and lifecycle](https://qubrics.com/docs/developer-tools/oauth).
 
 ## Included packages
 
@@ -85,7 +79,7 @@ For help, include the package name, version, API surface, and sanitised request 
 - Mailbox API reference: [qubrics.com/docs/mailbox-api/introduction](https://qubrics.com/docs/mailbox-api/introduction)
 - Management API reference: [qubrics.com/docs/api/introduction](https://qubrics.com/docs/api/introduction)
 - API keys guide: [qubrics.com/docs/guides/api-keys](https://qubrics.com/docs/guides/api-keys)
-- Source repository: [github.com/qubrics/qubrics-php-sdk](https://github.com/qubrics/qubrics-php-sdk)
+- Source repository: [github.com/qubrics/qubrics-sdk](https://github.com/qubrics/qubrics-sdk)
 
 ## License
 
